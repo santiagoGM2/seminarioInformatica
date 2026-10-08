@@ -1,23 +1,21 @@
-# Santiago Gómez · Perfil & Horizonte
+# Cinco capítulos · Seminario de ingeniería informática
 
-Web estática para el Seminario de Ingeniería Informática de la Universidad Autónoma de Occidente. Los archivos editables están en `dist/`: `index.html` (contenido), `styles.css` (diseño y adaptación móvil), `app.js` (interacciones).
+Landing educativa en español, inspirada en la tipografía y el recorrido de https://www.syahrilarfianalmazril.my.id/. Contiene exactamente cinco capítulos y un caso profesional ilustrativo; no presenta la biografía ni los hábitos de Santiago. LinkedIn es el único enlace personal.
 
-## Abrir localmente
+## Editar y abrir
 
-Puede abrirse `dist/index.html` directamente. Para servirla por HTTP: `python -m http.server 4173 --directory dist`, y abrir `http://localhost:4173`.
+El contenido está en build-content.py. Ejecutar Python build-content.py para regenerar dist/index.html. El diseño está en dist/styles.css y las interacciones en dist/app.js. Servir con python -m http.server 4173 --directory dist y abrir http://localhost:4173. El producto publicado es HTML estático; no necesita Python para funcionar.
 
-## Contenido y procedencia
+## Recorrido
 
-- Perfil y experiencia basados en cvATS.pdf y cv alto impacto.pdf aportados por Santiago, más la experiencia en deep learning y minería de datos indicada en su mensaje.
-- No se presenta el pregrado ni la especialización como títulos ya obtenidos.
-- Fuentes concretas propuestas a petición del usuario; no se atribuyen como hábitos confirmados ni cursos completados. Consultar los enlaces F01–F10 y ajustar los que Santiago sigue realmente.
-- Tendencias y oportunidades son una síntesis personal apoyada en esas fuentes; las inferencias sobre carrera, negocio y autonomía se distinguen de los hechos del perfil.
-- Autodiagnóstico y ruta 2026–2031 son propuestas. El perfil futuro es aspiracional y está condicionado al cumplimiento del plan.
-- No se publican el número telefónico, el correo ni copias de los CV.
-- Dirección visual inspirada en https://www.syahrilarfianalmazril.my.id/; implementación original, sin copiar su código ni sus imágenes.
+1. Perfil completo: técnica, conocimientos, experiencia formativa, comunicación, valores y cuatro dimensiones del autodiagnóstico.
+2. Ocho fuentes específicas y enlazadas: Andrew Ng, The Batch, StatQuest, GitHub, WEF, OWASP, BBC y freeCodeCamp.
+3. Cinco tendencias relacionadas con tecnología, trabajo, comunicación y vida personal. Las aplicaciones al perfil son interpretaciones del caso.
+4. Cinco oportunidades: acción, plazo propuesto, evidencia y siguiente posibilidad por tendencia.
+5. Perfil aspiracional en 2031 y ruta coherente 2027–2031. No promete resultados ni empleos.
 
-## Movimiento y accesibilidad
+## Movimiento
 
-Revelado de secciones, lectura progresiva, parallax moderado de portada, banda tipográfica, cursor complementario y secuencia horizontal de tendencias ligada al scroll en escritorio. En móvil, las tendencias se leen verticalmente. El botón de pausa detiene la animación decorativa; las transiciones también respetan `prefers-reduced-motion`. La secuencia de tendencias mantiene su función de navegación al pausar. Navegación por teclado, enlace de salto, foco visible, contenido visible sin JavaScript y estilo de impresión con todas las oportunidades expandidas.
+Scroll nativo con GSAP 3.15.0 y ScrollTrigger locales. Portada fijada con desplazamiento tipográfico; palabras reveladas durante la lectura; cinco escenas de tendencias; oportunidades en recorrido horizontal; años 2026–2031 animados. En pantallas pequeñas o bajas se ofrece lectura vertical con transiciones de scroll. Movimiento desactivable, preferencia de sistema respetada, contenido completo sin JavaScript y navegación por teclado. Las escenas fuera de pantalla no reciben foco.
 
-Google Fonts sirve DM Sans y Space Grotesk; si no hay conexión se usan fuentes del sistema. No hay dependencias de JavaScript, analítica ni servicios de IA conectados.
+Fuentes Inter alojadas localmente bajo SIL Open Font License, en dist/fonts/LICENSE.txt. GSAP conserva las cabeceras de licencia de la distribución oficial; condiciones en https://gsap.com/standard-license/. SVG originales, sin imágenes ni código extraídos de la referencia. Sin analítica, backend ni servicios de IA conectados.
