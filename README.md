@@ -1,6 +1,6 @@
 # seminarioInformatica
 
-Web personal de Santiago Gómez para el Seminario de Ingeniería Informática. Cinco capítulos: quién soy, fuentes de información, tendencias, oportunidades y perfil aspiracional en 2031.
+Web personal de Santiago Gómez para el Seminario de Ingeniería Informática. Cinco capítulos: quién soy, fuentes de información, tendencias, oportunidades y perfil profesional proyectado en 2031.
 
 ## Despliegue en Vercel
 
@@ -28,7 +28,7 @@ Abrir http://localhost:4173. No necesita Node, Python ni un backend en el alojam
 
 Perfil basado en los CV facilitados por Santiago y en sus conocimientos declarados de machine learning, deep learning y minería de datos. Se conserva «estudiante de último semestre», sin afirmar título ni especialización ya obtenidos. Grovia se describe como experiencia de noviembre de 2025 a junio de 2026, no como empleo actual. El nivel de inglés de partida es intermedio. No se publican copias de los CV, correo ni teléfono.
 
-Los seis referentes son Midudev, Andrew Ng, DotCSV, MoureDev, Fazt y StatQuest. Kaggle y OWASP complementan los recursos. El mapa se amplía a petición de Santiago; no se inventan cursos completados ni frecuencias de consumo. Tendencias y autodiagnóstico son una reflexión profesional propuesta, y 2031 es un perfil aspiracional condicionado al trabajo descrito.
+Los seis referentes son Midudev, Andrew Ng, DotCSV, MoureDev, Fazt y StatQuest. Kaggle y OWASP complementan los recursos. El mapa se amplía a petición de Santiago; no se inventan cursos completados ni frecuencias de consumo. Tendencias y autodiagnóstico son una reflexión profesional propuesta, y el perfil de 2031 es un ejercicio de proyección narrado en presente, como si las oportunidades ya se hubieran concretado: ciencia de datos, desarrollo de IA senior, trabajo remoto internacional y divulgación.
 
 ## Movimiento y adaptación
 
