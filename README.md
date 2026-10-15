@@ -2,6 +2,10 @@
 
 Web personal de Santiago Gómez para el Seminario de Ingeniería Informática. Cinco capítulos: quién soy, fuentes de información, tendencias, oportunidades y perfil aspiracional en 2031.
 
+## Despliegue en Vercel
+
+Importar este repositorio con la rama de producción `main` y la raíz del repositorio como directorio del proyecto. `vercel.json` selecciona el preset Other, omite instalación y compilación, y publica únicamente `dist`. No requiere variables de entorno. Los cambios de contenido deben regenerarse con `python build-content.py` antes de subirlos.
+
 ## Abrir y editar
 
 El producto es estático. Servir la carpeta dist con cualquier servidor HTTP; por ejemplo:
