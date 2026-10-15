@@ -1,7 +1,21 @@
-# Seminario de ingeniería informática
+# Seminario de ingeniería informática · Santiago Gómez
 
-Landing educativa en español. El lector recorre exactamente cinco capítulos: perfil completo y autodiagnóstico, fuentes específicas, tendencias basadas en esas fuentes, una oportunidad medible por tendencia, y un perfil futuro a cinco años. El contenido es un caso profesional ilustrativo; no atribuye hábitos, empleos ni logros a Santiago. Su LinkedIn es el único enlace personal.
+## Propósito y público
 
-El usuario pide reemplazar la primera versión y prioriza el diseño, la tipografía y las animaciones de https://www.syahrilarfianalmazril.my.id/. Compromisos: Inter muy pesado y grande, fondo oscuro, composición asimétrica, blanco/gris con acentos azul y amarillo, contraste serif cursivo, transiciones narrativas ligadas al scroll. Sin relleno comercial ni secciones de portafolio. Scroll nativo, navegación directa, móvil y movimiento reducido legibles.
+Página personal en español para presentar el seminario. El lector debe conocer a Santiago, identificar sus fuentes, entender las tendencias que interpreta, relacionarlas con oportunidades medibles y llegar a una visión profesional aspiracional en 2031. Mantener exactamente cinco capítulos.
 
-Conservar Site existente y audiencia privada. Implementación estática sin backend, dependencias GSAP locales. Las fuentes son propuestas concretas para el caso ilustrativo y las proyecciones son aspiraciones, nunca resultados garantizados.
+## Decisiones confirmadas por Santiago · 15 de octubre de 2026
+
+El usuario reemplaza expresamente el caso ilustrativo por su perfil personal, facilita su fotografía y un banner de referencia, y pide su código en https://github.com/santiagoGM2/seminarioInformatica. La foto debe aparecer al entrar y desplazarse del centro al lado izquierdo durante el scroll. El banner orienta el color y los circuitos; no debe ser necesariamente mostrado. El amarillo se elimina y las oportunidades usan morado oscuro. Mantener la navegación dividida por capítulo.
+
+La inspiración explícita continúa siendo https://www.syahrilarfianalmazril.my.id/, especialmente Inter grande, transiciones tipográficas y cubo 3D con AI/NN/LLM/DATA/VISION/ML. Las animaciones deben funcionar en ventanas normales, sin F11, también en móvil.
+
+## Contenido y evidencia
+
+Ambos CV describen estudiante de último semestre de Ingeniería Informática en UAO. Experiencia Grovia: noviembre 2025–junio 2026; The Box Technology: abril 2025. Desarrollo Python/Anthropic para PQRS, React/Next/TypeScript, datos, CRM y automatizaciones. Electrónica, comunicación asertiva y liderazgo. Inglés intermedio. ML, deep learning y minería de datos son áreas declaradas por el usuario; no atribuir títulos, resultados de investigación o especializaciones terminadas.
+
+Midudev y Andrew Ng son referentes expresos. Ampliar con DotCSV, MoureDev, Fazt y StatQuest, fotos y recursos concretos. No inventar cursos completados ni hábitos medidos. Las tendencias son interpretaciones personales y las oportunidades son un plan propuesto. El perfil 2031 es aspiracional.
+
+## Restricciones
+
+Conservar Site e identidad de alojamiento y audiencia actual. No publicar CV, correo ni teléfono. Usar GSAP local y CSS 3D: sin backend ni Three.js si no aporta una ventaja necesaria. Mantener contenido legible sin JS y movimiento reducido. La altura nunca desactiva las tres escenas principales. Texto largo fuera de pins recortados. Código editable, imágenes con procedencia y ningún secreto en GitHub.

@@ -1,21 +1,37 @@
-# Cinco capítulos · Seminario de ingeniería informática
+# seminarioInformatica
 
-Landing educativa en español, inspirada en la tipografía y el recorrido de https://www.syahrilarfianalmazril.my.id/. Contiene exactamente cinco capítulos y un caso profesional ilustrativo; no presenta la biografía ni los hábitos de Santiago. LinkedIn es el único enlace personal.
+Web personal de Santiago Gómez para el Seminario de Ingeniería Informática. Cinco capítulos: quién soy, fuentes de información, tendencias, oportunidades y perfil aspiracional en 2031.
 
-## Editar y abrir
+## Abrir y editar
 
-El contenido está en build-content.py. Ejecutar Python build-content.py para regenerar dist/index.html. El diseño está en dist/styles.css y las interacciones en dist/app.js. Servir con python -m http.server 4173 --directory dist y abrir http://localhost:4173. El producto publicado es HTML estático; no necesita Python para funcionar.
+El producto es estático. Servir la carpeta dist con cualquier servidor HTTP; por ejemplo:
 
-## Recorrido
+    python -m http.server 4173 --directory dist
 
-1. Perfil completo: técnica, conocimientos, experiencia formativa, comunicación, valores y cuatro dimensiones del autodiagnóstico.
-2. Ocho fuentes específicas y enlazadas: Andrew Ng, The Batch, StatQuest, GitHub, WEF, OWASP, BBC y freeCodeCamp.
-3. Cinco tendencias relacionadas con tecnología, trabajo, comunicación y vida personal. Las aplicaciones al perfil son interpretaciones del caso.
-4. Cinco oportunidades: acción, plazo propuesto, evidencia y siguiente posibilidad por tendencia.
-5. Perfil aspiracional en 2031 y ruta coherente 2027–2031. No promete resultados ni empleos.
+Abrir http://localhost:4173. No necesita Node, Python ni un backend en el alojamiento final. Python solo se usa para regenerar el contenido:
 
-## Movimiento
+    python build-content.py
+    python verify-site.py
+    node --check dist/app.js
 
-Scroll nativo con GSAP 3.15.0 y ScrollTrigger locales. Portada fijada con desplazamiento tipográfico; palabras reveladas durante la lectura; cinco escenas de tendencias; oportunidades en recorrido horizontal; años 2026–2031 animados. En pantallas pequeñas o bajas se ofrece lectura vertical con transiciones de scroll. Movimiento desactivable, preferencia de sistema respetada, contenido completo sin JavaScript y navegación por teclado. Las escenas fuera de pantalla no reciben foco.
+- build-content.py: contenido y estructura semántica, incluyendo referentes y cinco relaciones tendencia/oportunidad.
+- dist/styles.css: tipografía, paleta grafito/plata/morado y composición adaptable.
+- dist/app.js: GSAP, navegación, filtros, autodiagnóstico y control de movimiento.
+- dist/assets: fotografía de Santiago, avatares públicos de referentes y SVG originales.
+- ASSETS.json: procedencia de imágenes y recursos visuales.
 
-Fuentes Inter alojadas localmente bajo SIL Open Font License, en dist/fonts/LICENSE.txt. GSAP conserva las cabeceras de licencia de la distribución oficial; condiciones en https://gsap.com/standard-license/. SVG originales, sin imágenes ni código extraídos de la referencia. Sin analítica, backend ni servicios de IA conectados.
+## Contenido
+
+Perfil basado en los CV facilitados por Santiago y en sus conocimientos declarados de machine learning, deep learning y minería de datos. Se conserva «estudiante de último semestre», sin afirmar título ni especialización ya obtenidos. Grovia se describe como experiencia de noviembre de 2025 a junio de 2026, no como empleo actual. El nivel de inglés de partida es intermedio. No se publican copias de los CV, correo ni teléfono.
+
+Los seis referentes son Midudev, Andrew Ng, DotCSV, MoureDev, Fazt y StatQuest. Kaggle y OWASP complementan los recursos. El mapa se amplía a petición de Santiago; no se inventan cursos completados ni frecuencias de consumo. Tendencias y autodiagnóstico son una reflexión profesional propuesta, y 2031 es un perfil aspiracional condicionado al trabajo descrito.
+
+## Movimiento y adaptación
+
+GSAP 3.15.0 y ScrollTrigger alojados localmente. La foto viaja del centro hacia la izquierda, un cubo CSS 3D rota y cambia de lado a través de tres dimensiones del perfil, y el año pasa de 2026 a 2031 con una pausa final. Los pins no tienen condición de altura ni dependen de F11. La composición cambia por anchura; altura y distancias se recalculan al redimensionar, cargar fuentes o imágenes.
+
+El texto largo permanece en flujo normal. Hay navegación por teclado, foco visible, controles táctiles, filtro de referentes, un autodiagnóstico con pestañas y modo sin animaciones. Se respeta prefers-reduced-motion y el contenido sigue legible sin JavaScript.
+
+Diseño inspirado en https://www.syahrilarfianalmazril.my.id/, con implementación original y la paleta del banner aportado por Santiago. El banner no se usa como fondo ni se copian imágenes o código de esa web.
+
+Inter se aloja bajo SIL Open Font License (dist/fonts/LICENSE.txt). GSAP conserva las cabeceras de la distribución oficial: https://gsap.com/standard-license/. Los retratos de creadores se vinculan a sus perfiles oficiales para identificación editorial. Los diagramas son SVG originales. Sin analítica, formularios, backend ni servicios de IA conectados.

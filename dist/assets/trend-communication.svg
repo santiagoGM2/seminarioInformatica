@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="500" viewBox="0 0 700 500" fill="none" role="img" aria-labelledby="title desc">
+<title id="title">Comunicación y colaboración entre equipos</title><desc id="desc">Cuatro personas conectan sus perspectivas con un espacio central de decisiones compartidas.</desc>
+<defs><pattern id="dots" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e9e9ef" opacity=".11"/></pattern></defs>
+<path d="M52 80H648V420H52Z" fill="url(#dots)"/>
+<ellipse cx="350" cy="252" rx="229" ry="150" stroke="#e9e9ef" stroke-width="1.2" opacity=".2" stroke-dasharray="4 8"/>
+<g stroke="#a99cf5" stroke-width="2"><path d="M152 159H205V213H248M548 159H495V213H452M152 347H205V287H248M548 347H495V287H452"/><path d="M350 132V167M350 333V371"/></g>
+<rect x="248" y="167" width="204" height="166" rx="9" fill="#121216" stroke="#c6bdf6" stroke-width="2"/>
+<path d="M248 204H452" stroke="#c6bdf6" opacity=".55"/>
+<text x="350" y="191" text-anchor="middle" fill="#e9e9ef" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="600" letter-spacing="1.7">PROPÓSITO COMÚN</text>
+<g stroke="#e9e9ef" stroke-width="2"><path d="M270 225H336M270 237H324M270 249H345" opacity=".65"/><path d="M270 280H289V299H270ZM303 284H428M303 295H395" opacity=".4"/></g>
+<path d="m366 244 15-15 14 14 20-24" stroke="#a99cf5" stroke-width="2"/>
+<g fill="#121216" stroke="#e9e9ef" stroke-width="1.7"><circle cx="124" cy="159" r="41"/><circle cx="576" cy="159" r="41"/><circle cx="124" cy="347" r="41"/><circle cx="576" cy="347" r="41"/></g>
+<g stroke="#c6bdf6" stroke-width="1.8"><circle cx="124" cy="148" r="10"/><path d="M104 180c0-22 40-22 40 0"/><circle cx="576" cy="148" r="10"/><path d="M556 180c0-22 40-22 40 0"/><circle cx="124" cy="336" r="10"/><path d="M104 368c0-22 40-22 40 0"/><circle cx="576" cy="336" r="10"/><path d="M556 368c0-22 40-22 40 0"/></g>
+<g fill="#c6bdf6"><circle cx="205" cy="213" r="4"/><circle cx="495" cy="287" r="4"/><circle cx="350" cy="132" r="5"/><circle cx="350" cy="371" r="5"/></g>
+<g font-family="Inter,Arial,sans-serif" font-size="12" font-weight="600" letter-spacing="2" fill="#e9e9ef" text-anchor="middle"><text x="124" y="102">ESCUCHAR</text><text x="576" y="102">EXPLICAR</text><text x="124" y="413">CONTRASTAR</text><text x="576" y="413">CONSTRUIR</text><text x="350" y="401" fill="#c6bdf6">ALINEAR</text></g>
+</svg>

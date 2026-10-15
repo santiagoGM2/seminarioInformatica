@@ -1,215 +1,234 @@
 (() => {
   'use strict';
-  document.documentElement.classList.remove('no-js');
-  const $ = (selector) => document.querySelector(selector);
-  const $$ = (selector) => [...document.querySelectorAll(selector)];
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const $ = selector => document.querySelector(selector);
+  const $$ = selector => [...document.querySelectorAll(selector)];
+  const systemMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const motionButton = $('#motion');
-  let savedMotion;
-  try { savedMotion = localStorage.getItem('seminario-motion'); } catch (_) { /* Privacy mode keeps the system preference. */ }
-  let motionOn = !reduced.matches && savedMotion !== 'off';
-  let context, media, trendTrigger, opportunityTrigger;
-  let trendActive = -1, opportunityActive = -1;
-  const pinnedState = { trend: false, opportunity: false };
-  const trendPanels = $$('.trend-panel');
-  const opportunityPanels = $$('.opportunity-panel');
   const sceneTargets = new Map();
-  const navLinks = $$('.header nav a');
-  let keyboardNavigation = false;
-  let navigationUsed = false;
+  const stackPanels = $$('.stack-copy');
+  let preference;
+  try { preference = localStorage.getItem('sg-motion'); } catch (_) { /* Optional persistence. */ }
+  let motionOn = !systemMotion.matches && preference !== 'off';
+  let media, general, identityTimeline, stackTimeline, futureTimeline;
+  let stackIndex = -1, stackPinned = false;
+  let keyboardNavigation = false, navigationUsed = false, refreshTimer;
+  document.documentElement.classList.remove('no-js');
   window.addEventListener('keydown', () => { keyboardNavigation = true; navigationUsed = true; });
   window.addEventListener('pointerdown', () => { keyboardNavigation = false; navigationUsed = true; });
+  const headerHeight = () => $('.header').getBoundingClientRect().height;
+  const stageHeight = () => Math.max(200, innerHeight - headerHeight());
+  const padding = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pad')) || $('.hero-meta').getBoundingClientRect().left;
 
-  function setScene(kind, index, pinned = false) {
-    const panels = kind === 'trend' ? trendPanels : opportunityPanels;
-    if ((kind === 'trend' ? trendActive : opportunityActive) === index && pinnedState[kind] === pinned) return;
-    pinnedState[kind] = pinned;
-    if (kind === 'trend') trendActive = index; else opportunityActive = index;
-    $(`#${kind}-count`).textContent = String(index + 1).padStart(2, '0');
-    $$(`[data-${kind}]`).forEach((button, i) => button.setAttribute('aria-pressed', String(i === index)));
-    panels.forEach((panel, i) => {
-      // Only the scene presently visible participates in keyboard and screen-reader navigation.
-      panel.inert = pinned && i !== index;
-      if (pinned && i !== index) panel.setAttribute('aria-hidden', 'true');
+  function setStack(index, pinned = true) {
+    if (stackIndex === index && stackPinned === pinned) return;
+    stackIndex = index; stackPinned = pinned;
+    $$('[data-stack]').forEach((button, i) => button.setAttribute('aria-pressed', String(index === i)));
+    stackPanels.forEach((panel, i) => {
+      panel.inert = pinned && index !== i;
+      if (pinned && index !== i) panel.setAttribute('aria-hidden', 'true');
       else panel.removeAttribute('aria-hidden');
     });
   }
-  function resetScenes() {
-    sceneTargets.clear(); trendTrigger = opportunityTrigger = null;
-    $$('.is-pinned').forEach(el => el.classList.remove('is-pinned'));
-    [...trendPanels, ...opportunityPanels].forEach(panel => { panel.inert = false; panel.removeAttribute('aria-hidden'); });
-    trendActive = opportunityActive = -1;
-    setScene('trend', 0); setScene('opportunity', 0);
+  function finishScrubs() {
+    if (!window.ScrollTrigger) return;
+    ScrollTrigger.update();
+    ScrollTrigger.getAll().forEach(trigger => {
+      if (!trigger.vars.scrub) return;
+      const tween = trigger.getTween();
+      if (tween && typeof tween.progress === 'function') tween.progress(1);
+      trigger.animation?.progress(trigger.progress);
+    });
   }
-  function scrollToTarget(target, smooth = true) {
-    const element = document.getElementById(target);
-    if (!element) return;
-    if (element.matches('details')) element.open = true;
-    const scene = sceneTargets.get(target);
-    const offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header')) || 86;
-    const top = scene ? scene() : element.getBoundingClientRect().top + window.scrollY - offset - 16;
+  function showReferences(category = 'all') {
+    let count = 0;
+    $$('.reference').forEach(card => { card.hidden = category !== 'all' && card.dataset.category !== category; if (!card.hidden) count++; });
+    $$('[data-filter]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === category)));
+    $('#reference-count').textContent = `${count} ${count === 1 ? 'referente' : 'referentes'}`;
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }
+  function scrollToTarget(id, { smooth = true, focus = false } = {}) {
+    const target = document.getElementById(id);
+    if (!target) return;
+    if (target.matches('.reference') && target.hidden) showReferences();
+    const calculateScene = sceneTargets.get(id);
+    const top = calculateScene ? calculateScene() : target.getBoundingClientRect().top + scrollY - headerHeight() - 18;
     window.scrollTo({ top: Math.max(0, top), behavior: motionOn && smooth ? 'smooth' : 'instant' });
-    if (!smooth && window.ScrollTrigger) {
-      ScrollTrigger.update();
-      // Keyboard jumps render the destination immediately, without a scrub delay.
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (!trigger.vars.scrub) return;
-        const tween = trigger.getTween();
-        if (tween && typeof tween.progress === 'function') tween.progress(1);
-        trigger.animation?.progress(trigger.progress);
-      });
-    }
-    if (!smooth) {
-      element.setAttribute('tabindex', '-1'); element.focus({ preventScroll: true });
-    }
+    if (!smooth) finishScrubs();
+    if (focus) { target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); }
   }
   $$('a[href^="#"]').forEach(link => link.addEventListener('click', event => {
-    const target = link.getAttribute('href').slice(1);
-    if (!document.getElementById(target)) return;
-    event.preventDefault();
-    scrollToTarget(target, event.detail !== 0 && !keyboardNavigation);
-    history.replaceState(null, '', `#${target}`);
-    if (event.detail === 0 || keyboardNavigation) {
-      const el = document.getElementById(target);
-      // Scene visibility changes synchronously when keyboard navigation jumps to a pin.
-      if (sceneTargets.has(target)) ScrollTrigger.update();
-      el.setAttribute('tabindex', '-1'); el.focus({ preventScroll: true });
-    }
+    const id = link.hash.slice(1);
+    if (!document.getElementById(id)) return;
+    event.preventDefault(); navigationUsed = true;
+    const keyboard = keyboardNavigation || event.detail === 0;
+    scrollToTarget(id, { smooth: !keyboard, focus: keyboard });
+    history.replaceState(null, '', `#${id}`);
   }));
-  $$('[data-trend]').forEach(button => button.addEventListener('click', () => scrollToTarget(`trend-${Number(button.dataset.trend) + 1}`, false)));
-  $$('[data-opportunity]').forEach(button => button.addEventListener('click', () => scrollToTarget(`opportunity-${Number(button.dataset.opportunity) + 1}`, false)));
+  $$('[data-stack]').forEach(button => button.addEventListener('click', () => {
+    navigationUsed = true;
+    scrollToTarget(`stack-${Number(button.dataset.stack) + 1}`, { smooth: false, focus: true });
+  }));
+  $$('[data-filter]').forEach(button => button.addEventListener('click', () => showReferences(button.dataset.filter)));
 
-  // Full keyboard behavior for the profile's diagnostic tabs.
   const tabs = $$('[role=tab]');
-  function activateTab(index) {
+  function selectTab(index) {
     tabs.forEach((tab, i) => {
       const active = i === index;
       tab.setAttribute('aria-selected', String(active)); tab.tabIndex = active ? 0 : -1;
-      $(`#${tab.getAttribute('aria-controls')}`).hidden = !active;
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
     });
+    requestRefresh();
   }
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => activateTab(index));
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => selectTab(i));
     tab.addEventListener('keydown', event => {
       let next;
-      if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
-      else if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;
-      else if (event.key === 'Home') next = 0;
-      else if (event.key === 'End') next = tabs.length - 1;
-      if (next === undefined) return;
-      event.preventDefault(); activateTab(next); tabs[next].focus();
+      if (event.key === 'ArrowRight') next = (i + 1) % tabs.length;
+      if (event.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = tabs.length - 1;
+      if (next !== undefined) { event.preventDefault(); selectTab(next); tabs[next].focus(); }
     });
   });
 
-  // Split only short narrative leads. Text order and semantic content remain intact.
-  $$('.profile-lead .lead, .section-intro .lead').forEach(lead => {
-    const nodes = [...lead.childNodes];
-    nodes.forEach(node => {
-      if (node.nodeType !== Node.TEXT_NODE) return;
-      const fragment = document.createDocumentFragment();
-      node.textContent.split(/(\s+)/).forEach(word => {
-        if (/^\s*$/.test(word)) fragment.append(document.createTextNode(word));
-        else { const span = document.createElement('span'); span.className = 'word'; span.textContent = word; fragment.append(span); }
-      });
-      node.replaceWith(fragment);
-    });
+  $$('.word-reveal').forEach(element => {
+    const words = element.textContent.split(/(\s+)/);
+    element.replaceChildren(...words.map(word => {
+      if (/^\s*$/.test(word)) return document.createTextNode(word);
+      const span = document.createElement('span'); span.className = 'word'; span.textContent = word; return span;
+    }));
   });
 
+  function fitYear() {
+    const scene = $('.future-scene');
+    if (!scene.classList.contains('is-pinned')) { $('.year-display').style.removeProperty('font-size'); return; }
+    const display = $('.year-display');
+    const maxWidth = display.clientWidth * .31;
+    const maxHeight = display.clientHeight * .92;
+    display.style.fontSize = `${Math.max(50, Math.min(maxWidth, maxHeight))}px`;
+  }
+  function requestRefresh() {
+    clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(() => { fitYear(); if (window.ScrollTrigger) ScrollTrigger.refresh(); updateReading(); }, 120);
+  }
+  function clearScenes() {
+    sceneTargets.clear(); identityTimeline = stackTimeline = futureTimeline = undefined;
+    $$('.is-pinned').forEach(scene => scene.classList.remove('is-pinned'));
+    $('.year-display').style.removeProperty('font-size');
+    stackIndex = -1; setStack(0, false);
+  }
+
+  function makeIdentity(narrow) {
+    const stage = $('.identity-stage'); stage.classList.add('is-pinned');
+    const portrait = $('.portrait-motion');
+    const finalScale = narrow ? .58 : 1.02;
+    const finalX = () => padding() + 12 + portrait.clientWidth * finalScale / 2 - stage.clientWidth / 2;
+    const finalY = () => narrow ? headerHeight() + 62 + portrait.clientWidth * finalScale / 2 - stage.clientHeight * .51 : 0;
+    const tl = gsap.timeline({ scrollTrigger: { id: 'identity', trigger: stage, start: 'top top', end: () => `+=${Math.max(550, stage.clientHeight * 1.6)}`, pin: true, scrub: .65, anticipatePin: 1, invalidateOnRefresh: true } });
+    tl.addLabel('intro', 0)
+      .to('.given-name', { x: () => -innerWidth * .16, opacity: .025, duration: 1, ease: 'none' }, .18)
+      .to('.family-name', { x: () => innerWidth * .16, opacity: .025, duration: 1, ease: 'none' }, .18)
+      .to(portrait, { x: finalX, y: finalY, scale: finalScale, rotation: narrow ? -2 : -3, duration: 1.15, ease: 'power2.inOut' }, .18)
+      .to('.hero-bottom', { autoAlpha: 0, duration: .35, ease: 'none' }, .3)
+      .fromTo('.hero-story', { autoAlpha: 0, x: 24 }, { autoAlpha: 1, x: 0, duration: .65, ease: 'none' }, .75)
+      .to('.circuit-trace', { strokeDashoffset: -1600, duration: 2.25, ease: 'none' }, 0)
+      .addLabel('story', 1.5).to({}, { duration: .85 }, 1.5);
+    identityTimeline = tl;
+    sceneTargets.set('hero-story', () => tl.scrollTrigger.start + tl.labels.story / tl.duration() * (tl.scrollTrigger.end - tl.scrollTrigger.start));
+  }
+  function makeCube(narrow) {
+    const stage = $('.stack-scene'); stage.classList.add('is-pinned');
+    gsap.set(stackPanels.slice(1), { autoAlpha: 0, x: 20 });
+    gsap.set('.skill-cube', { rotationX: -18, rotationY: -30, rotationZ: -3, transformPerspective: 1000 });
+    const tl = gsap.timeline({ scrollTrigger: { id: 'stack', trigger: stage, start: () => `top ${headerHeight()}`, end: () => `+=${Math.max(1000, stageHeight() * 3.5)}`, pin: true, scrub: .7, anticipatePin: 1, invalidateOnRefresh: true } });
+    tl.addLabel('data', .25)
+      .to('.cube-travel', { x: () => stage.clientWidth * (narrow ? -.35 : -.4), duration: 1.15, ease: 'power2.inOut' }, 1.0)
+      .to('.skill-cube', { rotationY: 150, rotationX: 20, rotationZ: 5, duration: 1.4, ease: 'none' }, .8)
+      .to(stackPanels[0], { autoAlpha: 0, x: -24, duration: .35, ease: 'none' }, 1.05)
+      .to(stackPanels[1], { autoAlpha: 1, x: 0, duration: .5, ease: 'none' }, 1.4)
+      .addLabel('software', 2.3)
+      .to('.cube-travel', { x: 0, duration: 1.15, ease: 'power2.inOut' }, 3.0)
+      .to('.skill-cube', { rotationY: 345, rotationX: -26, rotationZ: -4, duration: 1.4, ease: 'none' }, 2.8)
+      .to(stackPanels[1], { autoAlpha: 0, x: 24, duration: .35, ease: 'none' }, 3.05)
+      .to(stackPanels[2], { autoAlpha: 1, x: 0, duration: .5, ease: 'none' }, 3.4)
+      .addLabel('people', 4.4).to({}, { duration: .8 }, 4.4);
+    tl.eventCallback('onUpdate', () => setStack(tl.time() < 1.4 ? 0 : tl.time() < 3.4 ? 1 : 2, true));
+    ['data','software','people'].forEach((label, i) => sceneTargets.set(`stack-${i+1}`, () => tl.scrollTrigger.start + tl.labels[label] / tl.duration() * (tl.scrollTrigger.end - tl.scrollTrigger.start)));
+    stackTimeline = tl; setStack(0, true);
+  }
+  function makeFuture() {
+    const scene = $('.future-scene'); scene.classList.add('is-pinned'); fitYear();
+    gsap.set('.year-track', { yPercent: 0 });
+    gsap.set('.future-year-progress b', { scaleX: 0 });
+    const tl = gsap.timeline({ scrollTrigger: { id: 'future', trigger: scene, start: () => `top ${headerHeight()}`, end: () => `+=${Math.max(650, stageHeight() * 2.3)}`, pin: true, scrub: .65, anticipatePin: 1, invalidateOnRefresh: true } });
+    tl.to('.year-track', { yPercent: -100 * 5 / 6, ease: 'none', duration: 5 }, .2)
+      .to('.future-orbit', { rotation: 180, ease: 'none', duration: 5 }, .2)
+      .to('.future-year-progress b', { scaleX: 1, ease: 'none', duration: 5 }, .2)
+      .addLabel('2031', 5.2).to({}, { duration: 1 }, 5.2);
+    futureTimeline = tl;
+    sceneTargets.set('futuro', () => tl.scrollTrigger.start);
+    sceneTargets.set('year-2031', () => tl.scrollTrigger.start + 5.3 / tl.duration() * (tl.scrollTrigger.end - tl.scrollTrigger.start));
+  }
   function buildMotion() {
-    if (media) media.revert();
-    if (context) context.revert();
-    resetScenes();
+    media?.revert(); general?.revert(); clearScenes();
+    if (!window.gsap || !window.ScrollTrigger) motionOn = false;
     document.body.classList.toggle('motion-off', !motionOn);
     motionButton.setAttribute('aria-pressed', String(motionOn));
     motionButton.setAttribute('aria-label', motionOn ? 'Animaciones activadas. Desactivar animaciones' : 'Animaciones desactivadas. Activar animaciones');
-    if (!window.gsap || !window.ScrollTrigger || !motionOn) return;
+    if (!motionOn) return;
     gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.config({ ignoreMobileResize: true });
-    context = gsap.context(() => {
+    general = gsap.context(() => {
       $$('.display-title').forEach(title => {
-        gsap.fromTo(title.children[0], { xPercent: -8 }, { xPercent: 0, ease: 'none', scrollTrigger: { trigger: title, start: 'top 90%', end: 'bottom 45%', scrub: 1 } });
-        gsap.fromTo(title.children[1], { xPercent: 8 }, { xPercent: 0, ease: 'none', scrollTrigger: { trigger: title, start: 'top 90%', end: 'bottom 45%', scrub: 1 } });
+        gsap.fromTo(title.children[0], { xPercent: -5 }, { xPercent: 0, ease: 'none', scrollTrigger: { trigger: title, start: 'top 94%', end: 'bottom 42%', scrub: .65, invalidateOnRefresh: true } });
+        gsap.fromTo(title.children[1], { xPercent: 5 }, { xPercent: 0, ease: 'none', scrollTrigger: { trigger: title, start: 'top 94%', end: 'bottom 42%', scrub: .65, invalidateOnRefresh: true } });
       });
-      $$('.profile-lead .lead, .section-intro .lead').forEach(lead => gsap.fromTo(lead.querySelectorAll('.word'), { opacity: .25 }, { opacity: 1, stagger: .08, ease: 'none', scrollTrigger: { trigger: lead, start: 'top 88%', end: 'bottom 45%', scrub: .5 } }));
-      $$('.competencies article, .source-list details, .future-route li').forEach((row, index) => gsap.fromTo(row, { y: 35, opacity: .45 }, { y: 0, opacity: 1, duration: .85, ease: 'expo.out', scrollTrigger: { trigger: row, start: 'top 94%', toggleActions: 'play none none reverse' } }));
+      $$('.word-reveal').forEach(text => gsap.fromTo(text.querySelectorAll('.word'), { opacity: .35 }, { opacity: 1, stagger: .06, ease: 'none', scrollTrigger: { trigger: text, start: 'top 88%', end: 'bottom 45%', scrub: .5, invalidateOnRefresh: true } }));
+      $$('.reference-photo').forEach(photo => gsap.fromTo(photo.querySelector('img'), { scale: 1.13, yPercent: 3 }, { scale: 1, yPercent: 0, ease: 'none', scrollTrigger: { trigger: photo, start: 'top bottom', end: 'bottom 40%', scrub: .6, invalidateOnRefresh: true } }));
+      $$('.trend-visual').forEach((visual, i) => {
+        gsap.fromTo(visual.querySelector('img'), { y: 28, rotation: i % 2 ? -3 : 3, scale: .94 }, { y: -12, rotation: 0, scale: 1.025, ease: 'none', scrollTrigger: { trigger: visual, start: 'top bottom', end: 'bottom top', scrub: .75, invalidateOnRefresh: true } });
+        gsap.fromTo(visual.querySelector('.visual-index'), { y: 25 }, { y: -35, ease: 'none', scrollTrigger: { trigger: visual, start: 'top bottom', end: 'bottom top', scrub: .75 } });
+      });
+      $$('.opportunity, .competence-grid article, .future-route li').forEach(row => gsap.fromTo(row, { y: 24, opacity: .65 }, { y: 0, opacity: 1, duration: .7, ease: 'expo.out', scrollTrigger: { trigger: row, start: 'top 95%', toggleActions: 'play none none reverse' } }));
     });
     media = gsap.matchMedia();
-    media.add('(min-width: 960px) and (min-height: 680px)', () => {
-      $('.trend-stage').classList.add('is-pinned');
-      $('.opportunity-stage').classList.add('is-pinned');
-      $('.future-stage').classList.add('is-pinned');
-      const identity = gsap.timeline({ scrollTrigger: { trigger: '.identity-stage', start: 'top top', end: () => `+=${innerHeight * .85}`, pin: true, scrub: 1, anticipatePin: 1 } });
-      identity.to('.identity-first', { xPercent: -18, opacity: .08, duration: 1, ease: 'none' }, 0).to('.identity-second', { xPercent: 18, opacity: .08, duration: 1, ease: 'none' }, 0).to('.identity-star', { rotation: 120, duration: 1, ease: 'none' }, 0).to('.identity-ghost', { opacity: 1, y: -20, duration: .6, ease: 'none' }, .4);
-      gsap.set(trendPanels.slice(1), { yPercent: 100 });
-      trendPanels.forEach((panel, i) => { panel.style.zIndex = i + 1; });
-      const trendTimeline = gsap.timeline({ scrollTrigger: { trigger: '.trend-stage', start: 'top top', end: () => `+=${innerHeight * 5}`, pin: true, scrub: .8, anticipatePin: 1 } });
-      trendPanels.slice(1).forEach((panel, i) => {
-        const at = .9 + i * 1.4;
-        trendTimeline.to(panel, { yPercent: 0, duration: .8, ease: 'none' }, at);
-        trendTimeline.fromTo(panel.querySelector('.scene-art'), { rotation: -25, scale: .8 }, { rotation: 0, scale: 1, duration: 1, ease: 'none' }, at);
-      });
-      trendTimeline.to({}, { duration: .3 }, 6.1);
-      trendTimeline.eventCallback('onUpdate', () => {
-        const index = Math.min(4, Math.max(0, Math.floor((trendTimeline.time() + .1) / 1.4)));
-        setScene('trend', index, true);
-      });
-      trendTrigger = trendTimeline.scrollTrigger;
-      trendPanels.forEach((panel, i) => sceneTargets.set(panel.id, () => trendTrigger.start + ((i === 0 ? .1 : 1.85 + (i - 1) * 1.4) / 6.4) * (trendTrigger.end - trendTrigger.start)));
-      setScene('trend', 0, true);
-      const opportunityTween = gsap.to('.opportunity-track', { xPercent: -400, ease: 'none', scrollTrigger: { trigger: '.opportunity-stage', start: 'top top', end: () => `+=${innerHeight * 4}`, pin: true, scrub: .8, anticipatePin: 1 } });
-      opportunityTween.eventCallback('onUpdate', () => setScene('opportunity', Math.min(4, Math.round(opportunityTween.progress() * 4)), true));
-      opportunityTrigger = opportunityTween.scrollTrigger;
-      opportunityPanels.forEach((panel, i) => sceneTargets.set(panel.id, () => opportunityTrigger.start + i / 4 * (opportunityTrigger.end - opportunityTrigger.start)));
-      setScene('opportunity', 0, true);
-      gsap.to('.year-track', { yPercent: -100 * 5 / 6, ease: 'none', scrollTrigger: { trigger: '.future-stage', start: 'top top', end: () => `+=${innerHeight * 1.6}`, pin: true, scrub: 1, anticipatePin: 1 } });
-      gsap.to('.future-star', { rotation: 150, ease: 'none', scrollTrigger: { trigger: '.future-stage', start: 'top top', end: () => `+=${innerHeight * 1.6}`, scrub: 1 } });
-      return () => resetScenes();
-    });
-    media.add('(max-width: 959px), (max-height: 679px)', () => {
-      gsap.to('.identity-first', { xPercent: -8, ease: 'none', scrollTrigger: { trigger: '.identity-stage', start: 'top top', end: 'bottom top', scrub: .5 } });
-      gsap.to('.identity-second', { xPercent: 8, ease: 'none', scrollTrigger: { trigger: '.identity-stage', start: 'top top', end: 'bottom top', scrub: .5 } });
-      gsap.to('.identity-star', { rotation: 90, ease: 'none', scrollTrigger: { trigger: '.identity-stage', start: 'top top', end: 'bottom top', scrub: .5 } });
-      trendPanels.forEach(panel => gsap.fromTo(panel.querySelector('.scene-art'), { rotation: -20 }, { rotation: 20, ease: 'none', scrollTrigger: { trigger: panel, start: 'top bottom', end: 'bottom top', scrub: 1 } }));
-      gsap.to('.year-track', { yPercent: -100 * 5 / 6, ease: 'none', scrollTrigger: { trigger: '.future-stage', start: 'top 80%', end: 'bottom 45%', scrub: .6 } });
+    // Only composition depends on width. Height NEVER disables the photo, cube or year animations.
+    media.add({ narrow: '(max-width: 700px)', wide: '(min-width: 701px)' }, context => {
+      const narrow = context.conditions.narrow;
+      makeIdentity(narrow); makeCube(narrow); makeFuture();
+      return () => clearScenes();
     });
     ScrollTrigger.refresh();
   }
-  function readingDestination() {
-    const current = $$('.chapter').filter(chapter => chapter.getBoundingClientRect().top <= innerHeight * .6).pop() || $('#quien');
-    if (current.id === 'tendencias' && trendTrigger?.isActive) return `trend-${trendActive + 1}`;
-    if (current.id === 'oportunidades' && opportunityTrigger?.isActive) return `opportunity-${opportunityActive + 1}`;
-    return current.id;
+  function currentDestination() {
+    if (stackTimeline?.scrollTrigger.isActive) return `stack-${stackIndex+1}`;
+    if (identityTimeline?.scrollTrigger.isActive && identityTimeline.progress() > .5) return 'perfil';
+    if (futureTimeline?.scrollTrigger.isActive) return 'futuro';
+    return $$('.chapter').filter(section => section.getBoundingClientRect().top <= innerHeight * .5).pop()?.id || 'quien';
   }
   motionButton.addEventListener('click', () => {
-    const destination = readingDestination(); motionOn = !motionOn;
-    try { localStorage.setItem('seminario-motion', motionOn ? 'on' : 'off'); } catch (_) { /* Optional preference persistence. */ }
-    buildMotion(); scrollToTarget(destination, false);
-    motionButton.focus({ preventScroll: true });
+    const destination = currentDestination(); motionOn = !motionOn;
+    try { localStorage.setItem('sg-motion', motionOn ? 'on' : 'off'); } catch (_) { /* Optional persistence. */ }
+    buildMotion(); scrollToTarget(destination, { smooth: false }); motionButton.focus({ preventScroll: true });
   });
-  reduced.addEventListener('change', event => {
-    if (event.matches) { const destination = readingDestination(); motionOn = false; buildMotion(); scrollToTarget(destination, false); }
+  systemMotion.addEventListener('change', event => {
+    if (event.matches) { const destination = currentDestination(); motionOn = false; buildMotion(); scrollToTarget(destination, { smooth: false }); }
   });
-  // Native progress/navigation work with animation disabled or vendor scripts unavailable.
-  let scheduled = false;
+  let readingScheduled = false;
   function updateReading() {
-    scheduled = false;
-    const maxScroll = document.documentElement.scrollHeight - innerHeight;
-    $('.reading-progress span').style.transform = `scaleX(${maxScroll > 0 ? scrollY / maxScroll : 0})`;
-    const active = $$('.chapter').filter(chapter => chapter.getBoundingClientRect().top <= innerHeight * .45).pop() || $('#quien');
-    navLinks.forEach(link => { if (link.hash === `#${active.id}`) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
-    if (!trendTrigger) {
-      const index = trendPanels.findLastIndex(panel => panel.getBoundingClientRect().top < innerHeight * .5);
-      if (index >= 0) setScene('trend', index);
-    }
-    if (!opportunityTrigger) {
-      const index = opportunityPanels.findLastIndex(panel => panel.getBoundingClientRect().top < innerHeight * .5);
-      if (index >= 0) setScene('opportunity', index);
-    }
+    readingScheduled = false;
+    const extent = document.documentElement.scrollHeight - innerHeight;
+    $('.reading-progress span').style.transform = `scaleX(${extent > 0 ? Math.max(0, Math.min(1, scrollY / extent)) : 0})`;
+    const active = $$('.chapter').filter(section => section.getBoundingClientRect().top <= innerHeight * .45).pop() || $('#quien');
+    $$('.header nav a').forEach(link => { if (link.hash === `#${active.id}`) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
   }
-  window.addEventListener('scroll', () => { if (!scheduled) { scheduled = true; requestAnimationFrame(updateReading); } }, { passive: true });
-  $$('.source-list details').forEach(detail => detail.addEventListener('toggle', () => { if (window.ScrollTrigger) ScrollTrigger.refresh(); }));
+  window.addEventListener('scroll', () => { if (!readingScheduled) { readingScheduled = true; requestAnimationFrame(updateReading); } }, { passive: true });
+  window.addEventListener('resize', requestRefresh, { passive: true });
+  window.addEventListener('orientationchange', requestRefresh);
+  $$('details').forEach(details => details.addEventListener('toggle', requestRefresh));
+  $$('img').forEach(image => { if (!image.complete) image.addEventListener('load', requestRefresh, { once: true }); });
+  if (window.ScrollTrigger) ScrollTrigger.addEventListener('refreshInit', fitYear);
   buildMotion(); updateReading();
-  if (location.hash) requestAnimationFrame(() => { if (!navigationUsed) scrollToTarget(location.hash.slice(1), false); });
-  // Loading a font refreshes dimensions; it must not rebuild the route or undo a user's navigation.
-  document.fonts.ready.then(() => { if (window.ScrollTrigger) ScrollTrigger.refresh(); updateReading(); });
+  if (location.hash) requestAnimationFrame(() => { if (!navigationUsed) scrollToTarget(location.hash.slice(1), { smooth: false }); });
+  document.fonts.ready.then(() => { requestRefresh(); document.body.dataset.ready = 'true'; });
 })();

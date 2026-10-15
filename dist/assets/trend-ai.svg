@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="500" viewBox="0 0 700 500" fill="none" role="img" aria-labelledby="title desc">
+<title id="title">IA aplicada: de datos a una solución evaluada</title><desc id="desc">Diagrama original de circuitos, entradas de datos, un procesador y un ciclo de evaluación.</desc>
+<defs><pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e9e9ef" opacity=".12"/></pattern><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="m2 1 5 4-5 4" stroke="#a99cf5" stroke-width="1.6"/></marker></defs>
+<path d="M57 92H643V413H57Z" fill="url(#dots)"/>
+<g stroke="#e9e9ef" stroke-width="1" opacity=".3"><path d="M48 120V83H85M615 83H652V120M652 379V416H615M85 416H48V379"/><path d="M278 91H422M278 410H422" stroke-dasharray="3 9"/></g>
+<g stroke="#a99cf5" stroke-width="2"><path d="M165 160H211V203H274M165 250H234V250H274M165 340H212V297H274"/><path d="M426 203H473V160H535M426 250H499V250H535M426 297H473V340H535"/><path d="M350 326V378H571V309" marker-end="url(#arrow)"/><path d="M350 174V123H129V138" stroke-dasharray="5 7"/></g>
+<g fill="#121216" stroke="#e9e9ef" stroke-width="1.6"><rect x="75" y="138" width="90" height="44" rx="5"/><rect x="75" y="228" width="90" height="44" rx="5"/><rect x="75" y="318" width="90" height="44" rx="5"/><rect x="535" y="138" width="90" height="44" rx="5"/><rect x="535" y="228" width="90" height="44" rx="5"/><rect x="535" y="318" width="90" height="44" rx="5"/></g>
+<g fill="#e9e9ef" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="600" letter-spacing="1" text-anchor="middle"><text x="120" y="165">DATOS</text><text x="120" y="255">CONTEXTO</text><text x="120" y="345">CRITERIO</text><text x="580" y="165">MODELO</text><text x="580" y="255">PRUEBA</text><text x="580" y="345">USO</text></g>
+<rect x="274" y="174" width="152" height="152" rx="13" fill="#121216" stroke="#a99cf5" stroke-width="2.5"/>
+<rect x="289" y="189" width="122" height="122" rx="4" stroke="#c6bdf6" opacity=".5"/>
+<g stroke="#c6bdf6" stroke-width="3"><path d="M302 160V174M326 160V174M350 160V174M374 160V174M398 160V174M302 326V340M326 326V340M350 326V340M374 326V340M398 326V340M260 202H274M260 226H274M260 250H274M260 274H274M260 298H274M426 202H440M426 226H440M426 250H440M426 274H440M426 298H440"/></g>
+<g stroke="#a99cf5" stroke-width="1.6"><path d="m315 269 22-37 24 34 25-37M315 269l46-3M337 232l49-3"/><circle cx="315" cy="269" r="5" fill="#121216"/><circle cx="337" cy="232" r="5" fill="#121216"/><circle cx="361" cy="266" r="5" fill="#121216"/><circle cx="386" cy="229" r="5" fill="#c6bdf6"/></g>
+<g fill="#c6bdf6" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="600" letter-spacing="2"><text x="75" y="102">APLICAR</text><text x="458" y="406">EVALUAR → AJUSTAR</text></g>
+<g fill="#c6bdf6"><circle cx="212" cy="203" r="3"/><circle cx="473" cy="297" r="3"/><circle cx="499" cy="250" r="3"/></g>
+</svg>

@@ -1,17 +1,13 @@
-# Diseño implementado
+# Dirección implementada · Santiago Gómez
 
-La referencia del usuario gobierna esta versión. Inter 900 muy grande, composición asimétrica, fondo negro carbón (#111111), blanco apagado (#efefeb), azul (#b4d9ef) y amarillo (#f0d96e). Georgia cursiva cambia la voz de los remates. El capítulo de oportunidades ocupa una superficie amarilla completa.
+La referencia fijada por el usuario mantiene Inter 900, escala grande, asimetría y remates Georgia cursiva. La nueva identidad toma el grafito y la plata de su banner: #0d0e12, #15161c, #ededf1, secundarios #aaaab6. El acento es lavanda #b9a8f5; el capítulo de oportunidades ocupa morado oscuro #1d172b. Se elimina el amarillo. Monograma SG, líneas de circuito originales y retrato real, sin mostrar el banner completo.
 
-Jerarquía: pregunta tipográfica en el primer capítulo; títulos desplazados entre líneas; narrativa en dos columnas; competencias separadas por reglas; fuentes en acordeones; tendencias como escenas; oportunidades como paneles horizontales; proyección con odómetro de años y ruta editorial. Los números identifican los cinco pasos obligatorios y sus correspondencias.
+La estructura es exactamente cinco capítulos. El primero contiene una portada personal, perfil completo, experiencia real, habilidades y autodiagnóstico. Seis retratos editoriales y dos recursos concretos forman el segundo. Cinco diagramas originales explican las tendencias del tercero. El cuarto relaciona cada tendencia con una acción, un plazo y una evidencia. El quinto conserva el odómetro hasta 2031, perfil aspiracional y ruta de crecimiento.
 
-Escala: texto 13–27px; enlaces y controles al menos 11px. Display se adapta a anchura y altura del viewport. Separación de capítulos 65–130px. Padding lateral 22px en móvil y 5vw en escritorio. SVG originales, sin raster.
+El retrato está centrado al entrar; al avanzar sale la tipografía y la fotografía se desplaza a la izquierda para revelar quién es Santiago. Un cubo CSS 3D con caras AI/NN/LLM/DATA/VISION/ML rota y cambia de lado entre datos, software y personas. Año, órbita y progreso comparten un timeline; hay una pausa final en 2031.
 
-ScrollTrigger fija escenas a partir de 960×680. La portada se desplaza en direcciones opuestas, palabras se iluminan durante la lectura, las tendencias se superponen verticalmente, oportunidades avanzan en horizontal y 2026 gira hasta 2031. Scroll nativo sin sustituir rueda o gestos. Botones de escena saltan al contenido y transfieren foco; escenas ocultas usan inert y aria-hidden sincronizados con la animación renderizada.
+No existe umbral vertical para habilitar animaciones. Los tres pins se montan a cualquier altura. Solo el ancho cambia la composición; distancias y tamaños se recalculan con funciones e invalidateOnRefresh. El año utiliza el espacio real disponible. El texto largo permanece en flujo natural. Scroll nativo, fuentes y GSAP locales. Interacción con filtros, desplegables de recursos, pestañas de autodiagnóstico y enlaces a cada oportunidad.
 
-En móvil y pantallas bajas todo el contenido se apila. Desactivar movimiento elimina los pins y mantiene la lectura. Prefers-reduced-motion tiene prioridad. Sin JS, textos, fuentes, tendencias, oportunidades y autodiagnóstico permanecen legibles. Foco azul en oscuro y negro en amarillo; selección amarilla.
+Navegación de cinco capítulos conservada, nombres accesibles incluso cuando el móvil solo muestra números. Foco visible y destinos con tabindex temporal, inactividad de escenas sincronizada con la transición renderizada. La preferencia de movimiento se puede cambiar sin ocultar contenido. Prefers-reduced-motion inicia la lectura estática; sin JS el perfil y los tres enfoques siguen presentes.
 
-## Revisión final
-
-Se revisó estructura y procedencia, y un segundo agente auditó movimiento y accesibilidad. Inspección visual en 1280×720 y 390×844. Correcciones: recorte de paneles adyacentes, títulos limitados por altura, etiquetas de navegación accesibles en móvil, controles táctiles de 44px, sincronización de foco y actualización de dimensiones tras cargar fuentes sin deshacer navegación. El detector se ejecutó: Inter y cursiva son decisiones explícitas de la referencia; numerales de fondo son decoración aria-hidden. Las etiquetas funcionales pequeñas se ampliaron.
-
-Veredicto: cinco capítulos completos, sin contenido de portafolio personal. Proyección ilustrativa con ocho fuentes enlazadas y una oportunidad medible por tendencia.
+Revisión: prueba visual y funcional en ventana 1366×583 y móvil 390×844, más auditoría independiente de los timelines y del preserve-3d. Se corrigieron destinos de escenas sin ID, alineación de inert con los fundidos y selección directa del final 2031. Imágenes con procedencia en ASSETS.json; SVG originales, sin imágenes generadas.

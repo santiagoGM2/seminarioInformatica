@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="500" viewBox="0 0 700 500" fill="none" role="img" aria-labelledby="title desc">
+<title id="title">Aprendizaje como ciclo de práctica y reflexión</title><desc id="desc">Diagrama original de cuatro etapas conectadas y un recorrido que avanza mediante práctica y revisión.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m2 1 5 4-5 4" stroke="#a99cf5" stroke-width="1.6"/></marker><pattern id="dots" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e9e9ef" opacity=".1"/></pattern></defs>
+<path d="M59 70H641V430H59Z" fill="url(#dots)"/>
+<circle cx="349" cy="248" r="134" stroke="#e9e9ef" stroke-width="1.1" stroke-dasharray="3 8" opacity=".25"/>
+<g stroke="#a99cf5" stroke-width="2" marker-end="url(#arrow)"><path d="M381 97C447 113 482 157 495 213"/><path d="M495 281C478 338 440 377 381 393"/><path d="M317 393C254 377 215 337 201 281"/><path d="M201 213C216 156 254 113 317 97"/></g>
+<g fill="#121216" stroke="#c6bdf6" stroke-width="1.7"><rect x="286" y="70" width="126" height="51" rx="5"/><rect x="441" y="222" width="126" height="51" rx="5"/><rect x="280" y="374" width="139" height="51" rx="5"/><rect x="130" y="222" width="126" height="51" rx="5"/></g>
+<g fill="#e9e9ef" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="600" letter-spacing="1.2" text-anchor="middle"><text x="349" y="101">EXPLORAR</text><text x="504" y="253">PRACTICAR</text><text x="349" y="405">REFLEXIONAR</text><text x="193" y="253">APLICAR</text></g>
+<rect x="293" y="180" width="112" height="133" rx="6" fill="#121216" stroke="#a99cf5" stroke-width="2"/>
+<path d="M307 168H418V300M320 156H431V287" stroke="#e9e9ef" stroke-width="1.4" opacity=".35"/>
+<path d="M310 201H378M310 213H363" stroke="#e9e9ef" stroke-width="2" opacity=".65"/>
+<g stroke="#c6bdf6" stroke-width="2"><path d="m310 239 5 5 10-11M336 239H386M310 265H325V280H310ZM336 271H374"/></g>
+<path d="M78 449H621" stroke="#e9e9ef" stroke-width="1" opacity=".2"/>
+<path d="M113 449H283L320 461H444L482 449H587" stroke="#a99cf5" stroke-width="2"/>
+<g fill="#121216" stroke="#c6bdf6" stroke-width="1.8"><circle cx="113" cy="449" r="5"/><circle cx="283" cy="449" r="5"/><circle cx="444" cy="461" r="5"/><circle cx="587" cy="449" r="5"/></g>
+<g fill="#e9e9ef" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="600" letter-spacing="1.4"><text x="69" y="154">CURIOSIDAD</text><text x="514" y="349">CRITERIO</text></g>
+<path d="M82 165H147V205M557 333V302H530" stroke="#e9e9ef" stroke-width="1" opacity=".35"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="500" viewBox="0 0 700 500" fill="none" role="img" aria-labelledby="title desc">
+<title id="title">Software como producto, de la interfaz al despliegue</title><desc id="desc">Composición original de una interfaz de navegador, capas de software, API y pruebas conectadas.</desc>
+<g stroke="#e9e9ef" opacity=".16"><path d="M59 153H641M59 211H641M59 269H641M59 327H641M121 77V414M211 77V414M301 77V414M391 77V414M481 77V414M571 77V414"/></g>
+<path d="M168 78H610V331H168Z" stroke="#e9e9ef" stroke-width="1.5" opacity=".3"/>
+<path d="M148 98H590V351H148Z" stroke="#c6bdf6" stroke-width="1.5" opacity=".5"/>
+<rect x="128" y="118" width="442" height="253" rx="9" fill="#121216" stroke="#a99cf5" stroke-width="2"/>
+<path d="M128 158H570" stroke="#a99cf5" stroke-width="1.5"/>
+<g fill="#c6bdf6"><circle cx="149" cy="138" r="3"/><circle cx="163" cy="138" r="3"/><circle cx="177" cy="138" r="3"/></g>
+<rect x="215" y="130" width="264" height="16" rx="3" stroke="#e9e9ef" opacity=".3"/>
+<path d="M232 138H350" stroke="#e9e9ef" stroke-width="2" opacity=".4"/>
+<rect x="150" y="182" width="145" height="146" rx="3" stroke="#e9e9ef" opacity=".6"/>
+<path d="m166 305 32-55 26 28 32-63 23 31M166 305H279" stroke="#c6bdf6" stroke-width="2"/>
+<path d="M166 199H215M166 211H199" stroke="#e9e9ef" stroke-width="2" opacity=".4"/>
+<g stroke="#e9e9ef" stroke-width="3"><path d="M317 190H501M317 204H478M317 218H413" opacity=".7"/><path d="M317 252H515M317 266H486M317 280H508" opacity=".3"/></g>
+<rect x="317" y="303" width="105" height="25" rx="3" fill="#a99cf5"/>
+<text x="369" y="320" fill="#121216" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="1">PROBAR</text>
+<g fill="#121216" stroke="#c6bdf6" stroke-width="1.6"><rect x="57" y="240" width="110" height="67" rx="5"/><rect x="507" y="304" width="131" height="67" rx="5"/></g>
+<g font-family="Inter,Arial,sans-serif" fill="#e9e9ef" font-size="13" font-weight="600" letter-spacing="1.5"><text x="77" y="266">API</text><text x="526" y="330">PRUEBAS</text></g>
+<path d="M78 284H107M116 284H145M526 349H550M559 349H618" stroke="#a99cf5" stroke-width="2"/>
+<g stroke="#a99cf5" stroke-width="1.7"><path d="M112 307V404H349V371M572 371V404H381"/><circle cx="349" cy="404" r="4" fill="#121216"/></g>
+<text x="128" y="446" fill="#c6bdf6" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="600" letter-spacing="2">DISEÑAR · CONSTRUIR · DESPLEGAR</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="500" viewBox="0 0 700 500" fill="none" role="img" aria-labelledby="title desc">
+<title id="title">Automatización de un proceso con validación</title><desc id="desc">Un flujo original conecta entrada, proceso, revisión y salida, con una ruta de ajuste.</desc>
+<defs><pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" stroke="#e9e9ef" opacity=".08"/></pattern><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m2 1 5 4-5 4" stroke="#a99cf5" stroke-width="1.6"/></marker></defs>
+<path d="M45 88H655V413H45Z" fill="url(#grid)"/>
+<g stroke="#e9e9ef" stroke-width="1" opacity=".3"><path d="M45 109V86H68M632 86H655V109M655 390V413H632M68 413H45V390"/><path d="M80 387H620" stroke-dasharray="3 8"/></g>
+<g stroke="#a99cf5" stroke-width="2" marker-end="url(#arrow)"><path d="M175 174H224V250H267"/><path d="M407 250H454"/><path d="M516 250H558V174H583"/><path d="M485 285V346H337V302"/></g>
+<g fill="#121216" stroke-width="2"><rect x="78" y="130" width="97" height="88" rx="7" stroke="#e9e9ef"/><rect x="267" y="198" width="140" height="104" rx="9" stroke="#a99cf5"/><path d="m485 215 35 35-35 35-35-35Z" stroke="#c6bdf6"/><rect x="583" y="130" width="55" height="88" rx="7" stroke="#e9e9ef"/></g>
+<g stroke="#e9e9ef" stroke-width="2"><path d="M102 151H151M102 163H140M102 185H128M102 197H149"/><path d="M596 154H625M596 167H625M596 180H612M596 193H621"/></g>
+<g stroke="#c6bdf6" stroke-width="2"><path d="M286 220H301V235H286ZM311 225H387M286 244H301V259H286ZM311 249H367M286 268H301V283H286ZM311 273H382"/><path d="m475 250 7 7 13-15"/></g>
+<circle cx="224" cy="250" r="5" fill="#121216" stroke="#a99cf5" stroke-width="2"/>
+<circle cx="558" cy="250" r="5" fill="#121216" stroke="#a99cf5" stroke-width="2"/>
+<g font-family="Inter,Arial,sans-serif" font-size="13" font-weight="600" letter-spacing="1.5" text-anchor="middle"><text x="126" y="246" fill="#e9e9ef">ENTRADA</text><text x="337" y="180" fill="#c6bdf6">PROCESAR</text><text x="485" y="193" fill="#c6bdf6">VALIDAR</text><text x="610" y="246" fill="#e9e9ef">SALIDA</text><text x="410" y="372" fill="#c6bdf6">AJUSTAR</text></g>
+<path d="M78 311H143M78 323H192M78 335H158" stroke="#e9e9ef" stroke-width="2" opacity=".25"/>
+<g fill="#a99cf5"><circle cx="337" cy="346" r="4"/><circle cx="485" cy="346" r="4"/></g>
+<text x="79" y="106" fill="#c6bdf6" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="600" letter-spacing="2">DEL PROCESO A LA ACCIÓN</text>
+</svg>

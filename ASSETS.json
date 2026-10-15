@@ -1,0 +1,40 @@
+{
+  "santiago-gomez.png": {
+    "origin": "User supplied profile photo, 2026-10-15",
+    "processing": "Unmodified original"
+  },
+  "midudev.jpg": {
+    "origin": "https://avatars.githubusercontent.com/u/1561955?v=4",
+    "purpose": "Editorial identification with link to official channel",
+    "verified": "2026-10-15"
+  },
+  "andrew-ng.jpg": {
+    "origin": "https://home-wordpress.deeplearning.ai/wp-content/uploads/2020/12/headshot-andrew-ng.jpg",
+    "purpose": "Editorial identification with link to official channel",
+    "verified": "2026-10-15"
+  },
+  "dotcsv.jpg": {
+    "origin": "https://yt3.googleusercontent.com/wqWZ8SXmktP5ROcvTxW2lGXskpwd2rZkthLaau8pZhJapVXOdLHLNvPkVnuy3waAp-nd7zwddQ=s900-c-k-c0x00ffffff-no-rj",
+    "purpose": "Editorial identification with link to official channel",
+    "verified": "2026-10-15"
+  },
+  "mouredev.jpg": {
+    "origin": "https://avatars.githubusercontent.com/u/17043402?v=4",
+    "purpose": "Editorial identification with link to official channel",
+    "verified": "2026-10-15"
+  },
+  "fazt.jpg": {
+    "origin": "https://avatars.githubusercontent.com/u/13667358?v=4",
+    "purpose": "Editorial identification with link to official channel",
+    "verified": "2026-10-15"
+  },
+  "statquest.jpg": {
+    "origin": "https://yt3.googleusercontent.com/Lzc9YzCKTkcA1My5A5pbsqaEtOoGc0ncWpCJiOQs2-0win3Tjf5XxmDFEYUiVM9jOTuhMjGs=s900-c-k-c0x00ffffff-no-rj",
+    "purpose": "Editorial identification with link to official channel",
+    "verified": "2026-10-15"
+  },
+  "trend-*.svg": {
+    "origin": "Original vectors authored for this website",
+    "processing": "No external raster sources"
+  }
+}
